@@ -1,3 +1,4 @@
+use std::prelude::v1::*;
 use std::error;
 use std::fmt;
 use std::io;
@@ -48,7 +49,7 @@ impl<W: ::std::any::Any> error::Error for IntoInnerError<W> {
         self.err.description()
     }
 
-    fn cause(&self) -> Option<&error::Error> {
+    fn cause(&self) -> Option<&dyn error::Error> {
         self.err.cause()
     }
 }
@@ -287,7 +288,7 @@ impl error::Error for Error {
         }
     }
 
-    fn cause(&self) -> Option<&error::Error> {
+    fn cause(&self) -> Option<&dyn error::Error> {
         None
     }
 }

@@ -85,6 +85,14 @@ fn main() {
 
 #![deny(missing_docs)]
 
+#![cfg_attr(all(feature = "mesalock_sgx",
+                not(target_env = "sgx")), no_std)]
+#![cfg_attr(all(target_env = "sgx", target_vendor = "mesalock"), feature(rustc_private))]
+
+#[cfg(all(feature = "mesalock_sgx", not(target_env = "sgx")))]
+#[macro_use]
+extern crate sgx_tstd as std;
+
 extern crate byteorder;
 #[macro_use]
 extern crate lazy_static;
@@ -92,8 +100,8 @@ extern crate lazy_static;
 extern crate quickcheck;
 #[cfg(test)]
 extern crate rand;
-#[cfg(all(test, feature = "cpp"))]
-extern crate snappy_cpp;
+//#[cfg(all(test, feature = "cpp"))]
+//extern crate snappy_cpp;
 
 pub use compress::{Encoder, max_compress_len};
 pub use decompress::{Decoder, decompress_len};
