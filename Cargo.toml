@@ -17,19 +17,22 @@ license = "BSD-3-Clause"
 bench = false
 
 [dependencies]
-byteorder = "1"
-lazy_static = "1"
-snappy-cpp = { path = "snappy-cpp", version = "0.1", optional = true }
+byteorder = { git = "https://github.com/mesalock-linux/byteorder-sgx" }
+lazy_static = { version = "1", default-features = false, features = ["spin_no_std"] }
+sgx_tstd = { rev = "v1.0.9", git = "https://github.com/baidu/rust-sgx-sdk.git", optional = true }
+#snappy-cpp = { path = "snappy-cpp", version = "0.1", optional = true }
 
 [dev-dependencies]
-quickcheck = { version = "0.7", default-features = false }
-rand = "0.5"
+#quickcheck = { version = "0.7", default-features = false }
+#rand = "0.5"
 
 [features]
-cpp = ["snappy-cpp"]
+default = ["mesalock_sgx"]
+mesalock_sgx = ["sgx_tstd"]
+#cpp = ["snappy-cpp"]
 
 [profile.release]
-debug = true
+#debug = true
 
 [profile.test]
 opt-level = 3
